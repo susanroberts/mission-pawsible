@@ -1,7 +1,22 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
-// place global css here
+@import "./colors.scss";
+
+body {
+  background-color: $raisin-black;
+  color: $ivory;
+}
+
+label {
+  color: $ivory;
+}
+
+input[type=text],
+input[type=number] {
+  background-color: $ivory;
+}
+
 *,
 *::before,
 *::after {
