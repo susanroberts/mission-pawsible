@@ -8,6 +8,7 @@ import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import MissionForm from "./content/MissionForm";
+import MissionList from "./content/MissionList";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -33,6 +34,9 @@ const App = (props) => {
         </Route>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <Route exact path="/missions">
+          <MissionList user={currentUser} />
+        </Route>
         <Route exact path="/missions/new">
           <MissionForm user={currentUser} />
         </Route>
