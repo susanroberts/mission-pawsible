@@ -9,6 +9,6 @@ rootRouter.use("/", clientRouter);
 
 rootRouter.use("/api/v1/user-sessions", userSessionsRouter);
 rootRouter.use("/api/v1/users", usersRouter);
-rootRouter.use("/api/v1/missions", missionsRouter)
+rootRouter.use("/api/v1/:userId", missionsRouter)
 
 export default rootRouter;

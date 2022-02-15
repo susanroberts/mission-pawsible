@@ -75,7 +75,7 @@ const MissionForm = props => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await fetch(`/api/v1/missions/${props.user.id}`, {
+      const response = await fetch(`/api/v1/${props.user.id}/missions`, {
         method: "POST",
         headers: new Headers({
           "Content-Type": "application/json"

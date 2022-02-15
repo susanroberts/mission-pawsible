@@ -3,21 +3,23 @@ import { ValidationError } from "objection"
 
 import cleanMissionForm from "../../../services/cleanMissionForm.js"
 import { User, Mission } from "../../../models/index.js"
+import MissionSerializer from "../../../serializers/MissionSerializer.js"
 
-const missionsRouter = new express.Router()
+const missionsRouter = new express.Router({ mergeParams: true})
 
-missionsRouter.get("/:userId", async (req, res) => {
+missionsRouter.get("/missions", async (req, res) => {
   const { userId } = req.params
   try {
     const user = await User.query().findById(userId)
     const missions = await user.$relatedQuery("missions")
-    return res.status(200).json({ missions })
+    const serializedMissions = MissionSerializer.getSummary(missions)
+    return res.status(200).json({ missions: serializedMissions })
   } catch (err) {
     return res.status(500).json({ errors: err })
   }
 })
 
-missionsRouter.post("/:userId", async (req, res) => {
+missionsRouter.post("/missions", async (req, res) => {
   const { userId } = req.params
   try {
     const missionBody = cleanMissionForm(req.body)
