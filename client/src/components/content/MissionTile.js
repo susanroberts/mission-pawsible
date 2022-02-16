@@ -1,8 +1,9 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 const MissionTile = props => {
   return (
-    <li>{props.mission.date}</li>
+    <li><Link to={`/missions/${props.mission.id}`}>{props.mission.date}</Link></li>
   )
 }
 

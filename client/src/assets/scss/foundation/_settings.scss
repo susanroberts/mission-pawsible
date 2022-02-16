@@ -69,8 +69,8 @@ $global-font-size: 100%;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #1779ba,
-  secondary: #767676,
+  primary: #25282C,
+  secondary: #FFFFF0,
   success: #3adb76,
   warning: #ffae00,
   alert: #cc4b37,
@@ -797,14 +797,14 @@ $switch-cursor-disabled: not-allowed;
 // 50. Table
 // ---------
 
-$table-background: $white;
+$table-background: #BCCECD;
 $table-color-scale: 5%;
-$table-border: 1px solid smart-scale($table-background, $table-color-scale);
+$table-border: 0px, 0px, 2px, 0px solid #7180B9;
 $table-padding: rem-calc(8 10 10);
 $table-hover-scale: 2%;
 $table-row-hover: darken($table-background, $table-hover-scale);
 $table-row-stripe-hover: darken($table-background, $table-color-scale + $table-hover-scale);
-$table-is-striped: true;
+$table-is-striped: false;
 $table-striped-background: smart-scale($table-background, $table-color-scale);
 $table-stripe: even;
 $table-head-background: smart-scale($table-background, $table-color-scale / 2);
@@ -872,7 +872,7 @@ $tooltip-radius: $global-radius;
 // -----------
 
 $topbar-padding: 0.5rem;
-$topbar-background: $light-gray;
+$topbar-background: #7180B9;
 $topbar-submenu-background: $topbar-background;
 $topbar-title-spacing: 0.5rem 1rem 0.5rem 0;
 $topbar-input-width: 200px;

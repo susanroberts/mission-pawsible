@@ -17,6 +17,29 @@ input[type=number] {
   background-color: $ivory;
 }
 
+.opal-tile {
+  background-color: $opal;
+  color: black;
+  margin: 20px;
+  padding: 5px;
+}
+
+tr {
+  border-bottom: 2px solid $glaucous;
+}
+
+.logo {
+  max-height: 100px;
+}
+
+.inline {
+  display: inline-flex;
+}
+
+.bottom {
+  vertical-align: bottom;
+}
+
 *,
 *::before,
 *::after {
