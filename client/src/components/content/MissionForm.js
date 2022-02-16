@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Redirect } from "react-router-dom"
 
 import ErrorList from "../layout/ErrorList.js"
 import translateServerErrors from "../../services/translateServerErrors.js"
@@ -27,6 +28,7 @@ const MissionForm = props => {
       anxietyLevel: 0
     }
   ]})
+  const [shouldRedirect, setShouldRedirect] = useState([false, null])
 
   const handleChange = event => {
     const inputName = event.currentTarget.name.split(" ")
@@ -45,31 +47,6 @@ const MissionForm = props => {
       ...getForm,
       notes: event.currentTarget.value
     })
-  }
-
-  const clearForm = () => {
-    setForm({
-      notes: "",
-      steps: [
-      {
-        item: "",
-        action: "",
-        duration: "0",
-        anxietyLevel: 0
-      },
-      {
-        item: "",
-        action: "",
-        duration: "0",
-        anxietyLevel: 0
-      },
-      {
-        item: "",
-        action: "",
-        duration: "0",
-        anxietyLevel: 0
-      }
-    ]})
   }
   
   const handleSubmit = async (event) => {
@@ -93,13 +70,16 @@ const MissionForm = props => {
           throw (error)
         }
       } else {
-        setErrors([])
-        clearForm()
-        // eventually redirect to mission show page
+        const body = await response.json()
+        setShouldRedirect([true, body.mission.id])
       }
     } catch (err) {
       console.error("error in fetch", err)
     }
+  }
+
+  if (shouldRedirect[0]) {
+    return <Redirect push to={`/missions/${shouldRedirect[1]}`} />
   }
 
   return (
