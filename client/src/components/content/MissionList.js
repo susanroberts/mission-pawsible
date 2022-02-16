@@ -34,11 +34,15 @@ const MissionList = props => {
   })
 
   return (
-    <div>
-      <h1>My Missions</h1>
-      <ul>
-        {missionTiles}
-      </ul>
+    <div className="grid-x grid-margin-x">
+      <div className="cell small-2" />
+      <div className="cell small-8 opal-tile">
+        <h1>My Missions</h1>
+        <ul>
+          {missionTiles}
+        </ul>
+      </div>
+      <div className="cell small-2" />
     </div>
   )
 }

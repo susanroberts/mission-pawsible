@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SignOutButton from "../authentication/SignOutButton";
+import SignOutButton from "../authentication/SignOutButton"
+
+import sleepy_dog from "../../../public/sleepy_dog.png"
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
@@ -23,8 +25,9 @@ const TopBar = ({ user }) => {
   return (
     <div className="top-bar">
       <div className="top-bar-left">
+        <img src={sleepy_dog} className="logo bottom"/>
+        <h1 className="inline bottom">Mission Pawsible: Home Alone</h1>
         <ul className="menu">
-          <li className="menu-text">App</li>
           <li>
             <Link to="/">Home</Link>
           </li>

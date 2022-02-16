@@ -19,6 +19,21 @@ missionsRouter.get("/missions", async (req, res) => {
   }
 })
 
+missionsRouter.get("/missions/:missionId", async (req, res) => {
+  const { userId, missionId } = req.params
+  try {
+    const mission = await Mission.query().findById(missionId)
+    if (mission.userId === userId) {
+      const serializedMission = await MissionSerializer.getDetails(mission)
+      return res.status(200).json({ mission: serializedMission })
+    } else {
+      return res.status(401).json({ error: "unauthorized"})
+    }
+  } catch (err) {
+    return res.status(500).json({ errors: err })
+  }
+})
+
 missionsRouter.post("/missions", async (req, res) => {
   const { userId } = req.params
   try {

@@ -9,6 +9,7 @@ import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import MissionForm from "./content/MissionForm";
 import MissionList from "./content/MissionList";
+import MissionShow from "./content/MissionShow";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -39,6 +40,9 @@ const App = (props) => {
         </Route>
         <Route exact path="/missions/new">
           <MissionForm user={currentUser} />
+        </Route>
+        <Route exact path="/missions/:missionId">
+          <MissionShow user={currentUser} />
         </Route>
       </Switch>
     </Router>
