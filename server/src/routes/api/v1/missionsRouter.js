@@ -50,24 +50,23 @@ missionsRouter.post("/missions", async (req, res) => {
   const { userId } = req.params
   try {
     const missionBody = cleanMissionForm(req.body)
-    let newMission
-    if (missionBody.notes) {
-    newMission = await Mission.query().insertAndFetch({ userId: userId, notes: missionBody.notes })
-    } else {
-    newMission = await Mission.query().insertAndFetch({ userId })
-    }
-    for (let i=0; i < missionBody.steps.length; i++) {
-      const step = missionBody.steps[i]
-      const newStep = {
-        stepNumber: i+1,
-        item: step.item,
-        action: step.action,
-        duration: step.duration,
-        anxietyLevel: step.anxietyLevel
+    const transactionReturn = await Mission.transaction(async trx => {
+      let newMission = await Mission.query(trx).insertAndFetch({ userId: userId, notes: missionBody.notes })
+      for (let i=0; i < missionBody.steps.length; i++) {
+        const step = missionBody.steps[i]
+        const newStep = {
+          stepNumber: i+1,
+          item: step.item,
+          action: step.action,
+          duration: step.duration,
+          anxietyLevel: step.anxietyLevel
+        }
+        await newMission.$relatedQuery("steps", trx).insert(newStep)
       }
-      await newMission.$relatedQuery("steps").insert(newStep)
-    }
-    return res.status(201).json({ mission: newMission })
+      return newMission
+    })
+
+    return res.status(201).json({ mission: transactionReturn })
   } catch (err) {
     if (err instanceof ValidationError) {
       return res.status(422).json({ errors: err.data })
