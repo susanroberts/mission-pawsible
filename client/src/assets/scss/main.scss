@@ -12,6 +12,14 @@ label {
   color: $ivory;
 }
 
+.rounded {
+  border-radius: 10px;
+}
+
+.centered {
+  text-align: center;
+}
+
 input[type=text],
 input[type=number] {
   background-color: $ivory;
@@ -20,7 +28,7 @@ input[type=number] {
 .link-button {
   border: $glaucous solid 4px;
   border-radius: 5px;
-  background-color: $ivory;
+  background-color: $glaucous;
   display: inline;
   padding: 4px;
 }
