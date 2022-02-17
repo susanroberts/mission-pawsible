@@ -29,7 +29,13 @@ const TopBar = ({ user }) => {
         <h1 className="inline bottom">Mission Pawsible: Home Alone</h1>
         <ul className="menu">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/dashboard">Home</Link>
+          </li>
+          <li>
+            <Link to="/missions/new">New Mission</Link>
+          </li>
+          <li>
+            <Link to="/missions">All missions</Link>
           </li>
         </ul>
       </div>

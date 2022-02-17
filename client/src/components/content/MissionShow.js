@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 import StepList from "./StepList"
 
@@ -42,6 +42,7 @@ const MissionShow = props => {
         <h1>Mission from {mission.date}</h1>
         <StepList steps={mission.steps} />
         {notes}
+        <p className="link-button"><Link to="/missions">Back to missions</Link></p>
       </div>
       <div className="cell small-2" />
     </div>
