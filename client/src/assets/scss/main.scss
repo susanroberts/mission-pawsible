@@ -17,6 +17,14 @@ input[type=number] {
   background-color: $ivory;
 }
 
+.link-button {
+  border: $glaucous solid 4px;
+  border-radius: 5px;
+  background-color: $ivory;
+  display: inline;
+  padding: 4px;
+}
+
 .opal-tile {
   background-color: $opal;
   color: black;

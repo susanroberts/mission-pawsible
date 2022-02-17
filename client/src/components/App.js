@@ -10,6 +10,7 @@ import TopBar from "./layout/TopBar";
 import MissionForm from "./content/MissionForm";
 import MissionList from "./content/MissionList";
 import MissionShow from "./content/MissionShow";
+import Dashboard from "./content/Dashboard";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -30,8 +31,8 @@ const App = (props) => {
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/">
-          <h2>Hello from react</h2>
+        <Route exact path="/dashboard">
+          <Dashboard user={currentUser} />
         </Route>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />

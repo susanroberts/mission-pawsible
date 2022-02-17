@@ -19,6 +19,18 @@ missionsRouter.get("/missions", async (req, res) => {
   }
 })
 
+missionsRouter.get("/missions/recent", async (req, res) => {
+  const { userId } = req.params
+  try {
+    const thisWeek = await MissionSerializer.getThisWeek(userId)
+    const lastWeek = await MissionSerializer.getLastWeek(userId)
+    return res.status(200).json({ thisWeek, lastWeek })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ errors: err })
+  }
+})
+
 missionsRouter.get("/missions/:missionId", async (req, res) => {
   const { userId, missionId } = req.params
   try {
