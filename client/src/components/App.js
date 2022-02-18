@@ -12,6 +12,7 @@ import MissionList from "./content/MissionList";
 import MissionShow from "./content/MissionShow";
 import Dashboard from "./content/Dashboard";
 import SplashPage from "./content/SplashPage";
+import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -33,20 +34,28 @@ const App = (props) => {
       <TopBar user={currentUser} />
       <Switch>
         <Route exact path="/" component={SplashPage} />
-        <Route exact path="/dashboard">
-          <Dashboard user={currentUser} />
-        </Route>
+        <AuthenticatedRoute
+          exact path="/dashboard"
+          component={Dashboard}
+          user={currentUser}
+        />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/missions">
-          <MissionList user={currentUser} />
-        </Route>
-        <Route exact path="/missions/new">
-          <MissionForm user={currentUser} />
-        </Route>
-        <Route exact path="/missions/:missionId">
-          <MissionShow user={currentUser} />
-        </Route>
+        <AuthenticatedRoute
+          exact path="/missions"
+          component={MissionList}
+          user={currentUser}
+        />
+        <AuthenticatedRoute
+          exact path="/missions/new"
+          component={MissionForm}
+          user={currentUser}
+        />
+        <AuthenticatedRoute
+          exact path="/missions/:missionId"
+          component={MissionShow}
+          user={currentUser}
+        />
       </Switch>
     </Router>
   );
