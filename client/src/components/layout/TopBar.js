@@ -25,7 +25,7 @@ const TopBar = ({ user }) => {
   return (
     <div className="top-bar">
       <div className="top-bar-left">
-        <img src={sleepy_dog} className="logo bottom"/>
+        <Link to="/"><img src={sleepy_dog} className="logo bottom"/></Link>
         <h1 className="inline bottom">Mission Pawsible: Home Alone</h1>
         <ul className="menu">
           <li>
