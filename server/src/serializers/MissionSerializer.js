@@ -2,6 +2,9 @@ import { Mission } from "../models/index.js"
 
 class MissionSerializer {
   static getSummary(missionArray) {
+    missionArray.sort((a, b) => {
+      return b.createdAt - a.createdAt
+    })
     const serializedMissions = missionArray.map(mission => {
       const cleanMission = {}
       cleanMission.id = mission.id
@@ -34,6 +37,9 @@ class MissionSerializer {
     rangeStart.setHours(0, 0, 0, 0)
     let rangeEnd = new Date()
     const missions = await Mission.query().where("userId", userId).whereBetween("createdAt", [rangeStart, rangeEnd])
+    missions.sort((a, b) => {
+      return b.createdAt - a.createdAt
+    })
     const serializedMissions = this.getSummary(missions)
     return serializedMissions
   }
@@ -44,6 +50,9 @@ class MissionSerializer {
     rangeEnd.setHours(0, 0, 0, 0)
     let rangeStart = new Date(rangeEnd.getTime() - 604800000)
     const missions = await Mission.query().where("userId", userId).whereBetween("createdAt", [rangeStart, rangeEnd])
+    missions.sort((a, b) => {
+      return b.createdAt - a.createdAt
+    })
     const serializedMissions = this.getSummary(missions)
     return serializedMissions
   }
