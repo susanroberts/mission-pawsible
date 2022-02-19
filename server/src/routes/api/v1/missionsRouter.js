@@ -26,7 +26,6 @@ missionsRouter.get("/missions/recent", async (req, res) => {
     const lastWeek = await MissionSerializer.getLastWeek(userId)
     return res.status(200).json({ thisWeek, lastWeek })
   } catch (err) {
-    console.log(err)
     return res.status(500).json({ errors: err })
   }
 })
@@ -65,7 +64,6 @@ missionsRouter.post("/missions", async (req, res) => {
       }
       return newMission
     })
-
     return res.status(201).json({ mission: transactionReturn })
   } catch (err) {
     if (err instanceof ValidationError) {
