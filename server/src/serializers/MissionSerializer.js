@@ -56,6 +56,23 @@ class MissionSerializer {
     const serializedMissions = this.getSummary(missions)
     return serializedMissions
   }
+
+  static async getDurations(userId) {
+    const missions = await Mission.query().where("userId", userId)
+    for (const mission of missions) {
+      mission.steps = await mission.$relatedQuery("steps")
+    }
+    const durationArray = missions.map(mission => {
+      let finalStep = { stepNumber: 0 }
+      mission.steps.forEach(step => {
+        if (step.stepNumber > finalStep.stepNumber) {
+          finalStep = step
+        }
+      })
+      return { createdAt: mission.createdAt, duration: finalStep.duration }
+    })
+    return durationArray
+  }
 }
 
 export default MissionSerializer
