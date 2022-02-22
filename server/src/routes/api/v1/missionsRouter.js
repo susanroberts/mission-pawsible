@@ -30,6 +30,17 @@ missionsRouter.get("/missions/recent", async (req, res) => {
   }
 })
 
+missionsRouter.get("/missions/duration", async (req, res) => {
+  const { userId } = req.params
+  try {
+    const missionDuration = await MissionSerializer.getDurations(userId)
+    return res.status(200).json({ missionDuration })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ errors: err })
+  }
+})
+
 missionsRouter.get("/missions/:missionId", async (req, res) => {
   const { userId, missionId } = req.params
   try {

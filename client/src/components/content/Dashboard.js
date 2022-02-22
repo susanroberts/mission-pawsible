@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import MissionTile from "./MissionTile"
+import DurationGraph from "./DurationGraph"
 
 const Dashboard = props => {
   const [thisWeek, setThisWeek] = useState([])
@@ -56,7 +57,12 @@ const Dashboard = props => {
           <h5 className="opal-tile inline"><Link to="/missions">View all past missions</Link></h5>
         </div>
       </div>
-      <div className="cell small-6" />
+      <div className="cell small-4">
+        <div className="opal-tile">
+          <DurationGraph user={props.user}/>
+        </div>
+      </div>
+      <div className="cell small-2" />
     </div>
   )
 }
