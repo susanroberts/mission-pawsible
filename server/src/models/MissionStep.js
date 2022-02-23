@@ -10,11 +10,11 @@ class MissionStep extends Model {
       type: "object",
       required: ["stepNumber", "action", "duration", "anxietyLevel"],
       properties: {
-        stepNumber: "integer",
-        item: "string",
-        action: "string",
-        duration: ["string", "integer"],
-        anxietyLevel: ["string", "integer"]
+        stepNumber: { type: "integer" },
+        item: { type: ["string", "null"] },
+        action: { type: "string" },
+        duration: { type: ["string", "integer"] },
+        anxietyLevel: { type: ["string", "integer"] }
       }
     }
   }

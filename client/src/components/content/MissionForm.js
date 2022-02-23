@@ -139,25 +139,25 @@ const MissionForm = props => {
         <div className="grid-x grid-padding-x align-bottom">
           <div className="cell small-2" />
           <div className="cell small-2">
-            <label>Item(s)</label>
+            <label className="new-mission">Item(s)</label>
             {itemInputs}
           </div>
           <div className="cell small-2">
-            <label>Action</label>
+            <label className="new-mission">Action</label>
             {actionInputs}
           </div>
           <div className="cell small-2">
-            <label>Duration (minutes)</label>
+            <label className="new-mission">Duration (minutes)</label>
             {durationInputs}
           </div>
           <div className="cell small-2">
-            <label>Anxiety Level (0-5)</label>
+            <label className="new-mission">Anxiety Level (0-5)</label>
             {anxietyInputs}
           </div>
           <div className="cell small-2" />
           <div className="cell small-2" />
           <div className="cell small-8">
-            <label htmlFor="stepNum">Number of steps:</label>
+            <label htmlFor="stepNum" className="new-mission">Number of steps:</label>
             <select name="stepNum" className="option" onChange={stepChange}>
               <option value={1}>1</option>
               <option value={2}>2</option>
@@ -172,7 +172,7 @@ const MissionForm = props => {
               <option value={11}>11</option>
               <option value={12}>12</option>
             </select>
-            <label htmlFor="notes">Notes:</label>
+            <label htmlFor="notes" className="new-mission">Notes:</label>
             <textarea name="notes" onChange={noteChange} value={form.notes} />
             <input type="submit" />
           </div>

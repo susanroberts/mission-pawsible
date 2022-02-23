@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, Redirect } from "react-router-dom"
 
 import StepList from "./StepList"
+import UpdateMission from "./UpdateMission"
 
 const MissionShow = props => {
   const params = useParams()
@@ -9,6 +10,8 @@ const MissionShow = props => {
     notes: null,
     steps: []
   })
+  const [shouldRedirect, setShouldRedirect] = useState(false)
+  const [editMode, setEditMode] = useState(false)
 
   const getMission = async () => {
     const { missionId } = params
@@ -26,14 +29,44 @@ const MissionShow = props => {
     }
   }
 
-  let notes
-  if (mission.notes) {
-    notes = [<p>Notes:</p>, <p>{mission.notes}</p>]
+  const deleteMission = async () => {
+    const { missionId } = params
+    try {
+      const response = await fetch(`/api/v1/${props.user.id}/missions/${missionId}`, {
+        method: "DELETE",
+        headers: new Headers ({
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({ request: "Delete this"})
+      })
+      if (response.status === 201) {
+        setShouldRedirect(true)
+      }
+    } catch (err) {
+      console.error("Error in fetch", err)
+    }
   }
 
+  const toggleEdit = () => {
+    setEditMode(!editMode)
+  }
+  
+  let notes
+  if (mission.notes) {
+    notes = [<p key="notesTag">Notes:</p>, <p key="notesBody">{mission.notes}</p>]
+  }
+  
   useEffect(() => {
     getMission()
-  }, [props])
+  }, [props, editMode])
+
+  if (shouldRedirect) {
+    return <Redirect push to="/missions" />
+  }
+
+  if (editMode) {
+    return <UpdateMission mission={mission} toggleEdit={toggleEdit} user={props.user}/>
+  }
 
   return (
     <div className="grid-x grid-margin-x">
@@ -42,7 +75,13 @@ const MissionShow = props => {
         <h1>Mission from {mission.date}</h1>
         <StepList steps={mission.steps} />
         {notes}
-        <p className="link-button"><Link to="/missions">Back to missions</Link></p>
+        <div className="justify">
+          <Link to="/missions" className="link button">Back to missions</Link>
+          <div className="inline">
+            <a className="edit button" onClick={toggleEdit}>Edit</a>
+            <a className="delete button" onClick={deleteMission}>Delete</a>
+          </div>
+        </div>
       </div>
       <div className="cell small-2" />
     </div>

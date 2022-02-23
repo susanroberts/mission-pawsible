@@ -11,7 +11,7 @@ class Mission extends Model {
       required: ["userId"],
       properties: {
         userId: { type: "string" },
-        notes: { type: "string"}
+        notes: { type: ["string", "null"]}
       }
     }
   }
