@@ -8,7 +8,7 @@ body {
   color: $ivory;
 }
 
-label {
+.new-mission {
   color: $ivory;
 }
 
@@ -29,12 +29,51 @@ input[type=number] {
   background-color: $ivory;
 }
 
-.link-button {
-  border: $glaucous solid 4px;
+.button {
+  border: solid 4px;
   border-radius: 5px;
-  background-color: $glaucous;
-  display: inline;
   padding: 4px;
+  margin: 4px;
+  color: black;
+}
+
+.ivory {
+  border: $ivory;
+  background-color: $ivory;
+}
+
+.link {
+  border: $glaucous;
+  background-color: $glaucous;
+}
+
+.delete {
+  border: $crimson;
+  background-color: $crimson;
+}
+
+.edit {
+  border: $blue-purple;
+  background-color: $blue-purple;
+}
+
+.save {
+  border: $blue-purple;
+  background-color: $blue-purple;
+}
+
+.cancel {
+  border: $blue-purple;
+  background-color: $blue-purple;
+}
+
+.justify {
+  display: flex;
+  justify-content: space-between;
+}
+
+.right {
+  align-items: flex-end;
 }
 
 .opal-tile {

@@ -70,14 +70,14 @@ const SignInForm = () => {
       <h1>Sign In</h1>
       <form>
         <div>
-          <label>
+          <label className="new-mission">
             Email
             <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
             <FormError error={errors.email} />
           </label>
         </div>
         <div>
-          <label>
+          <label className="new-mission">
             Password
             <input
               type="password"
@@ -89,7 +89,7 @@ const SignInForm = () => {
           </label>
         </div>
         <div>
-          <input type="submit" className="button" value="Sign In" />
+          <input type="submit" className="ivory button" value="Sign In" />
         </div>
       </form>
     </div>

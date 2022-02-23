@@ -20,7 +20,7 @@ class MissionSerializer {
       notes: mission.notes,
       date: mission.createdAt.toDateString()
     }
-    const allowedAttributes = ["stepNumber", "item", "action", "duration", "anxietyLevel"]
+    const allowedAttributes = ["id", "stepNumber", "item", "action", "duration", "anxietyLevel"]
     serializedMission.steps = mission.steps.map(step => {
       const serializedStep = {}
       allowedAttributes.forEach(attribute => {

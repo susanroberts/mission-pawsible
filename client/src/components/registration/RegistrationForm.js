@@ -90,14 +90,14 @@ const RegistrationForm = () => {
       <h1>Register</h1>
       <form onSubmit={onSubmit}>
         <div>
-          <label>
+          <label className="new-mission">
             Email
             <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
             <FormError error={errors.email} />
           </label>
         </div>
         <div>
-          <label>
+          <label className="new-mission">
             Password
             <input
               type="password"
@@ -109,7 +109,7 @@ const RegistrationForm = () => {
           </label>
         </div>
         <div>
-          <label>
+          <label className="new-mission">
             Password Confirmation
             <input
               type="password"
@@ -121,7 +121,7 @@ const RegistrationForm = () => {
           </label>
         </div>
         <div>
-          <input type="submit" className="button" value="Register" />
+          <input type="submit" className="ivory button" value="Register" />
         </div>
       </form>
     </div>

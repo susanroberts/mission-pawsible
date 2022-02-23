@@ -2,7 +2,7 @@ import express from "express"
 import { ValidationError } from "objection"
 
 import cleanMissionForm from "../../../services/cleanMissionForm.js"
-import { User, Mission } from "../../../models/index.js"
+import { User, Mission, MissionStep } from "../../../models/index.js"
 import MissionSerializer from "../../../serializers/MissionSerializer.js"
 
 const missionsRouter = new express.Router({ mergeParams: true})
@@ -80,6 +80,51 @@ missionsRouter.post("/missions", async (req, res) => {
     if (err instanceof ValidationError) {
       return res.status(422).json({ errors: err.data })
     }
+    return res.status(500).json({ errors: err })
+  }
+})
+
+missionsRouter.put("/missions/:missionId", async (req, res) => {
+  const { missionId, userId } = req.params
+  try {
+    const updateRequest = cleanMissionForm(req.body)
+    if (updateRequest.notes === undefined) {
+      updateRequest.notes = null
+    }
+    const transactionReturn = await Mission.transaction(async trx => {
+      await Mission.query(trx)
+        .update({ notes: updateRequest.notes, userId: userId })
+        .where("id", missionId)
+      for (const step of updateRequest.steps) {
+        if (step.item === undefined) {
+          step.item = null
+        }
+        await MissionStep.query(trx)
+          .update(step)
+          .where("id", step.id)
+      }
+      return true
+    })
+    return res.status(201).json({ mission: transactionReturn })
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      return res.status(422).json({ errors: err.data })
+    }
+    return res.status(500).json({ errors: err })
+  }
+})
+
+missionsRouter.delete("/missions/:missionId", async (req, res) => {
+  const { missionId } = req.params
+  try {
+    await MissionStep.query()
+      .delete()
+      .where("missionId", missionId)
+    await Mission.query()
+      .delete()
+      .where("id", missionId)
+    return res.status(201).json({ message: "Mission deleted" })
+  } catch (err) {
     return res.status(500).json({ errors: err })
   }
 })
