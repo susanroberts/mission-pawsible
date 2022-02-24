@@ -15,7 +15,7 @@ import SplashPage from "./content/SplashPage";
 import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
 
 const App = (props) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(undefined);
   const fetchCurrentUser = async () => {
     try {
       const user = await getCurrentUser()

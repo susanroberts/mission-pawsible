@@ -25,22 +25,28 @@ const TopBar = ({ user }) => {
   return (
     <div className="top-bar">
       <div className="top-bar-left">
-        <Link to="/"><img src={sleepy_dog} className="logo bottom"/></Link>
-        <h1 className="inline bottom">Mission Pawsible: Home Alone</h1>
-        <ul className="menu">
-          <li>
-            <Link to="/dashboard">Home</Link>
-          </li>
-          <li>
-            <Link to="/missions/new">New Mission</Link>
-          </li>
-          <li>
-            <Link to="/missions">All missions</Link>
-          </li>
-        </ul>
+        <div className="inline">
+          <Link to="/"><img src={sleepy_dog} className="logo"/></Link>
+        </div>
+        <div className="inline">
+          <div className="block">
+            <h1 className="title">Mission Pawsible: Home Alone</h1>
+            <ul className="menu">
+              <li className="bold">
+                <Link to="/dashboard">Home</Link>
+              </li>
+              <li className="bold">
+                <Link to="/missions/new">New Mission</Link>
+              </li>
+              <li className="bold">
+                <Link to="/missions">All missions</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div className="top-bar-right">
-        <ul className="menu">{user ? authenticatedListItems : unauthenticatedListItems}</ul>
+        <ul className="menu bold">{user ? authenticatedListItems : unauthenticatedListItems}</ul>
       </div>
     </div>
   );

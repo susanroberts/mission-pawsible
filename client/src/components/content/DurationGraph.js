@@ -37,6 +37,10 @@ const DurationGraph = props => {
     getDuration()
   }, [])
 
+  if (durations.length < 4) {
+    return <h4 className="centered">Complete more missions to view training progress</h4>
+  }
+
   return (
     <>
     <h4 className="centered">Training Progress</h4>

@@ -34,7 +34,7 @@ const Dashboard = props => {
 
   useEffect(() => {
     getMissions()
-  }, [props])
+  }, [])
 
   return (
     <div className="grid-x grid-margin-x">

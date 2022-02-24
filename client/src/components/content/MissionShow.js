@@ -58,7 +58,7 @@ const MissionShow = props => {
   
   useEffect(() => {
     getMission()
-  }, [props, editMode])
+  }, [editMode])
 
   if (shouldRedirect) {
     return <Redirect push to="/missions" />
