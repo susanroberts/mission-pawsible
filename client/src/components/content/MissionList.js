@@ -22,7 +22,7 @@ const MissionList = props => {
 
   useEffect(() => {
     getMissions()
-  }, [props])
+  }, [])
 
   const missionTiles = missions.map(mission => {
     return (

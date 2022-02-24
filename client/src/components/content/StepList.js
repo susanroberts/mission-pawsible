@@ -15,7 +15,7 @@ const StepList = props => {
         <tr>
           <th>Item(s)</th>
           <th>Action</th>
-          <th>Duration (minutes)</th>
+          <th>Duration (mm:ss)</th>
           <th>Anxiety Level</th>
         </tr>
         {rows}

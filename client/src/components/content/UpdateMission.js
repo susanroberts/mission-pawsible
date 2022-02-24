@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import { useParams } from "react-router-dom"
 
 import ErrorList from "../layout/ErrorList.js"
@@ -50,13 +50,29 @@ const UpdateMission = props => {
     />
   })
   const durationInputs = form.steps.map((step, i) => {
-    return <input
-      key={`${i} duration`}
-      type="text"
-      name={`${i} duration`}
-      value={form.steps[i].duration}
-      onChange={handleChange}
-    />
+    return (
+      <Fragment>
+        <input
+          key={`${i} durationMinutes`}
+          type="number"
+          name={`${i} durationMinutes`}
+          className="durationInput"
+          value={form.steps[i].durationMinutes}
+          onChange={handleChange}
+        />
+        <p className="inline pre"> : </p>
+        <input
+          key={`${i} durationSeconds`}
+          type="number"
+          name={`${i} durationSeconds`}
+          className="durationInput"
+          value={form.steps[i].durationSeconds}
+          onChange={handleChange}
+          max={59}
+        />
+        <br/>
+      </Fragment>
+      )
   })
   const anxietyInputs = form.steps.map((step, i) => {
     return <input
@@ -113,28 +129,28 @@ const UpdateMission = props => {
         <ErrorList errors={errors} />
         <div className="grid-x grid-padding-x align-bottom">
           <div className="cell small-3">
-            <label>Item(s)</label>
+            <label className="bold">Item(s)</label>
             {itemInputs}
           </div>
           <div className="cell small-3">
-            <label>Action</label>
+            <label className="bold">Action</label>
             {actionInputs}
           </div>
           <div className="cell small-3">
-            <label>Duration (minutes)</label>
+            <label className="bold">Duration (mm:ss)</label>
             {durationInputs}
           </div>
           <div className="cell small-3">
-            <label>Anxiety Level (0-5)</label>
+            <label className="bold">Anxiety Level (0-5)</label>
             {anxietyInputs}
           </div>
         </div>
           <div className="cell small-8">
-            <label htmlFor="notes">Notes:</label>
+            <label htmlFor="notes" className="bold">Notes:</label>
             <textarea name="notes" onChange={noteChange} value={form.notes} />
           </div>
-        <p className="save button" onClick={handleSubmit}>Save</p>
-        <p className="cancel button" onClick={props.toggleEdit}>Cancel</p>
+        <p className="button" onClick={handleSubmit}>Save</p>
+        <p className="button" onClick={props.toggleEdit}>Cancel</p>
       </div>
       <div className="cell small-2" />
     </div>

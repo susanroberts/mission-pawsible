@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import { Redirect } from "react-router-dom"
 
 import ErrorList from "../layout/ErrorList.js"
@@ -55,13 +55,31 @@ const MissionForm = props => {
     />
   })
   const durationInputs = form.steps.map((step, i) => {
-    return <input
-      key={`${i} duration`}
-      type="text"
-      name={`${i} duration`}
-      value={form.steps[i].duration}
-      onChange={handleChange}
-    />
+    return (
+    <Fragment>
+      <input
+        key={`${i} durationMinutes`}
+        type="number"
+        name={`${i} durationMinutes`}
+        className="durationInput"
+        value={form.steps[i].durationMinutes}
+        onChange={handleChange}
+        min={0}
+      />
+      <p className="inline pre"> : </p>
+      <input
+        key={`${i} durationSeconds`}
+        type="number"
+        name={`${i} durationSeconds`}
+        className="durationInput"
+        value={form.steps[i].durationSeconds}
+        onChange={handleChange}
+        max={59}
+        min={0}
+      />
+      <br/>
+    </Fragment>
+    )
   })
   const anxietyInputs = form.steps.map((step, i) => {
     return <input
@@ -82,8 +100,9 @@ const MissionForm = props => {
         updatedSteps.push({
           item: "",
           action: "",
-          duration: "0",
-          anxietyLevel: 0
+          durationMinutes: "",
+          durationSecons: "",
+          anxietyLevel: ""
         })
       }
     } else if (steps < updatedSteps.length) {
@@ -136,46 +155,49 @@ const MissionForm = props => {
     <div>
       <ErrorList errors={errors} />
       <form onSubmit={handleSubmit}>
-        <div className="grid-x grid-padding-x align-bottom">
+        <div className="grid-x grid-margin-x">
           <div className="cell small-2" />
-          <div className="cell small-2">
-            <label className="new-mission">Item(s)</label>
-            {itemInputs}
-          </div>
-          <div className="cell small-2">
-            <label className="new-mission">Action</label>
-            {actionInputs}
-          </div>
-          <div className="cell small-2">
-            <label className="new-mission">Duration (minutes)</label>
-            {durationInputs}
-          </div>
-          <div className="cell small-2">
-            <label className="new-mission">Anxiety Level (0-5)</label>
-            {anxietyInputs}
+          <div className="cell small-8 opal-tile">
+            <div className="grid-x grid-margin-x align-bottom">
+              <div className="cell small-3">
+                <label htmlFor="stepNum" className="bold">Number of steps:</label>
+                    <select name="stepNum" className="option" onChange={stepChange}>
+                      <option value={1}>1</option>
+                      <option value={2}>2</option>
+                      <option value={3}>3</option>
+                      <option value={4}>4</option>
+                      <option value={5}>5</option>
+                      <option value={6}>6</option>
+                      <option value={7}>7</option>
+                      <option value={8}>8</option>
+                      <option value={9}>9</option>
+                      <option value={10}>10</option>
+                      <option value={11}>11</option>
+                      <option value={12}>12</option>
+                    </select>
+                <label className="bold">Item(s)</label>
+                {itemInputs}
+              </div>
+              <div className="cell small-3">
+                <label className="bold">Action</label>
+                {actionInputs}
+              </div>
+              <div className="cell small-3">
+                <label className="bold">Duration (mm:ss)</label>
+                {durationInputs}
+              </div>
+              <div className="cell small-3">
+                <label className="bold">Anxiety Level (0-5)</label>
+                {anxietyInputs}
+              </div>
+              <div className="cell small-12">
+                <label htmlFor="notes" className="bold">Notes:</label>
+                <textarea name="notes" onChange={noteChange} value={form.notes} />
+                <input type="submit" className="button"/>
+              </div>
+            </div>
           </div>
           <div className="cell small-2" />
-          <div className="cell small-2" />
-          <div className="cell small-8">
-            <label htmlFor="stepNum" className="new-mission">Number of steps:</label>
-            <select name="stepNum" className="option" onChange={stepChange}>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-              <option value={11}>11</option>
-              <option value={12}>12</option>
-            </select>
-            <label htmlFor="notes" className="new-mission">Notes:</label>
-            <textarea name="notes" onChange={noteChange} value={form.notes} />
-            <input type="submit" />
-          </div>
         </div>
       </form>
     </div>

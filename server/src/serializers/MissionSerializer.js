@@ -20,9 +20,11 @@ class MissionSerializer {
       notes: mission.notes,
       date: mission.createdAt.toDateString()
     }
-    const allowedAttributes = ["id", "stepNumber", "item", "action", "duration", "anxietyLevel"]
+    const allowedAttributes = ["id", "stepNumber", "item", "action", "anxietyLevel"]
     serializedMission.steps = mission.steps.map(step => {
       const serializedStep = {}
+      serializedStep.durationMinutes = Math.floor(step.duration / 60)
+      serializedStep.durationSeconds = step.duration % 60
       allowedAttributes.forEach(attribute => {
         serializedStep[attribute] = step[attribute]
       })
@@ -69,7 +71,8 @@ class MissionSerializer {
           finalStep = step
         }
       })
-      return { createdAt: mission.createdAt, duration: finalStep.duration }
+      const durationMin = finalStep.duration / 60
+      return { createdAt: mission.createdAt, duration: durationMin }
     })
     return durationArray
   }
