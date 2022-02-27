@@ -47,6 +47,7 @@ class User extends uniqueFunc(Model) {
 
   static get relationMappings() {
     const Mission = require("./Mission.js")
+    const Action = require("./Action.js")
 
     return {
       missions: {
@@ -55,6 +56,14 @@ class User extends uniqueFunc(Model) {
         join: {
           from: "users.id",
           to: "missions.userId"
+        }
+      },
+      actions: {
+        relation: Model.HasManyRelation,
+        modelClass: Action,
+        join: {
+          from: "actions.userId",
+          to: "user.id"
         }
       }
     }

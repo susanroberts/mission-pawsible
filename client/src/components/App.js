@@ -13,6 +13,7 @@ import MissionShow from "./content/MissionShow";
 import Dashboard from "./content/Dashboard";
 import SplashPage from "./content/SplashPage";
 import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
+import PresetPage from "./content/PresetPage";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -37,6 +38,11 @@ const App = (props) => {
         <AuthenticatedRoute
           exact path="/dashboard"
           component={Dashboard}
+          user={currentUser}
+        />
+        <AuthenticatedRoute
+          exact path="/presets"
+          component={PresetPage}
           user={currentUser}
         />
         <Route exact path="/users/new" component={RegistrationForm} />

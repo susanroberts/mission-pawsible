@@ -5,9 +5,9 @@ import cleanMissionForm from "../../../services/cleanMissionForm.js"
 import { User, Mission, MissionStep } from "../../../models/index.js"
 import MissionSerializer from "../../../serializers/MissionSerializer.js"
 
-const missionsRouter = new express.Router({ mergeParams: true})
+const missionsRouter = new express.Router({ mergeParams: true })
 
-missionsRouter.get("/missions", async (req, res) => {
+missionsRouter.get("/", async (req, res) => {
   const { userId } = req.params
   try {
     const user = await User.query().findById(userId)
@@ -19,7 +19,7 @@ missionsRouter.get("/missions", async (req, res) => {
   }
 })
 
-missionsRouter.get("/missions/recent", async (req, res) => {
+missionsRouter.get("/recent", async (req, res) => {
   const { userId } = req.params
   try {
     const thisWeek = await MissionSerializer.getThisWeek(userId)
@@ -30,7 +30,7 @@ missionsRouter.get("/missions/recent", async (req, res) => {
   }
 })
 
-missionsRouter.get("/missions/duration", async (req, res) => {
+missionsRouter.get("/duration", async (req, res) => {
   const { userId } = req.params
   try {
     const missionDuration = await MissionSerializer.getDurations(userId)
@@ -41,7 +41,7 @@ missionsRouter.get("/missions/duration", async (req, res) => {
   }
 })
 
-missionsRouter.get("/missions/:missionId", async (req, res) => {
+missionsRouter.get("/:missionId", async (req, res) => {
   const { userId, missionId } = req.params
   try {
     const mission = await Mission.query().findById(missionId)
@@ -56,7 +56,7 @@ missionsRouter.get("/missions/:missionId", async (req, res) => {
   }
 })
 
-missionsRouter.post("/missions", async (req, res) => {
+missionsRouter.post("/", async (req, res) => {
   const { userId } = req.params
   try {
     const missionBody = cleanMissionForm(req.body)
@@ -84,7 +84,7 @@ missionsRouter.post("/missions", async (req, res) => {
   }
 })
 
-missionsRouter.put("/missions/:missionId", async (req, res) => {
+missionsRouter.put("/:missionId", async (req, res) => {
   const { missionId, userId } = req.params
   try {
     const updateRequest = cleanMissionForm(req.body)
@@ -114,7 +114,7 @@ missionsRouter.put("/missions/:missionId", async (req, res) => {
   }
 })
 
-missionsRouter.delete("/missions/:missionId", async (req, res) => {
+missionsRouter.delete("/:missionId", async (req, res) => {
   const { missionId } = req.params
   try {
     await MissionStep.query()
