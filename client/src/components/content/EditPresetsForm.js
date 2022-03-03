@@ -12,7 +12,6 @@ const EditPresetsForm = props => {
     const changeIndex = parseInt(event.currentTarget.name)
     newValues[changeIndex].description = event.currentTarget.value
     setForm(newValues)
-    
   }
 
   const handleSubmit = async () => {
@@ -36,10 +35,22 @@ const EditPresetsForm = props => {
     generateForm()
   }, [])
 
+  const addStep = () => {
+    setForm(form.concat({
+      description: ''
+    }))
+  }
+
+  const removeStep = () => {
+    const newForm = form.concat()
+    newForm.pop()
+    setForm(newForm)
+  }
+
   const actionInputs = form.map((action, i) => {
     return (
       <input
-        key={action.id}
+        key={i}
         type="text"
         name={i}
         value={form[i].description}
@@ -54,6 +65,8 @@ const EditPresetsForm = props => {
       <div className="cell small-8 opal-tile">
         <h4>Updating Actions</h4>
         {actionInputs}
+        <a className="edit button" onClick={addStep}>Add a step</a>
+        <a className="delete button" onClick={removeStep}>Remove a step</a>
         <a className="button" onClick={handleSubmit}>Save</a>
         <a className="button" onClick={props.toggleEdit}>Cancel</a>
       </div>
