@@ -5,7 +5,7 @@ const router = new express.Router();
 
 const clientRoutes = ["/", "/user-sessions/new", "/users/new"];
 
-const authedClientRoutes = ["/missions", "/missions/new", "/missions/:missionId", "/dashboard"]
+const authedClientRoutes = ["/missions", "/missions/new", "/missions/:missionId", "/dashboard", "/presets"]
 
 router.get(clientRoutes, (req, res) => {
   res.sendFile(getClientIndexPath());

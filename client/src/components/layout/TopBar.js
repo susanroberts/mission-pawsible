@@ -39,7 +39,7 @@ const TopBar = ({ user }) => {
                 <Link to="/missions/new">New Mission</Link>
               </li>
               <li className="bold">
-                <Link to="/missions">All missions</Link>
+                <Link to="/presets">Save Presets</Link>
               </li>
             </ul>
           </div>
