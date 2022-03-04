@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
-import EditPresetsForm from './EditPresetsForm'
 
+import EditPresetsForm from './EditPresetsForm'
 import SimpleListItem from './SimpleListItem'
 
 const PresetPage = props => {
@@ -24,7 +24,7 @@ const PresetPage = props => {
 
   useEffect(() => {
     getPresets()
-  }, [])
+  }, [editMode])
 
   const toggleEdit = () => {
     setEditMode(!editMode)
@@ -42,6 +42,7 @@ const PresetPage = props => {
     <div className="grid-x grid-margin-x">
       <div className="cell small-2" />
       <div className="cell small-8 opal-tile">
+        <p>To streamline filling out a mission, you can add commonly used actions here. Not sure where to start? Click on "edit", then click on the "use default settings" button. Editing presets will not alter past missions.</p>
         <h4>Saved Actions</h4>
         <ul>
           {actionTiles}

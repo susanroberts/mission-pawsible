@@ -47,6 +47,17 @@ const EditPresetsForm = props => {
     setForm(newForm)
   }
 
+  const setDefaults = () => {
+    setForm([
+      {description: "open door, close, return"},
+      {description: "exit house, close door, return"},
+      {description: "exit house, close door, wait, return"},
+      {description: "exit house, lock door, return"},
+      {description: "exit house, lock door, wait, return"},
+      {description: "exit house, lock door, drive away, wait, return"}
+    ])
+  }
+
   const actionInputs = form.map((action, i) => {
     return (
       <input
@@ -65,10 +76,11 @@ const EditPresetsForm = props => {
       <div className="cell small-8 opal-tile">
         <h4>Updating Actions</h4>
         {actionInputs}
-        <a className="edit button" onClick={addStep}>Add a step</a>
-        <a className="delete button" onClick={removeStep}>Remove a step</a>
+        <a className="edit button" onClick={addStep}>Add</a>
+        <a className="delete button" onClick={removeStep}>Remove</a>
         <a className="button" onClick={handleSubmit}>Save</a>
         <a className="button" onClick={props.toggleEdit}>Cancel</a>
+        <a className="button" onClick={setDefaults}>Use default settings</a>
       </div>
       <div className="cell small-2" />
     </div>

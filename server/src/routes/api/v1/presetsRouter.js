@@ -19,21 +19,22 @@ presetsRouter.put("/", async (req, res) => {
   const { userId } = req.params
   try {
     const updatedActions = cleanPresetForm(req.body)
-    const actionsIds = []
+    const actionIds = []
     for (const action of updatedActions) {
       if (action.id) {
-        actionsIds.push(action.id)
+        actionIds.push(action.id)
         await Action.query()
           .findById(action.id)
           .update(action)
       } else {
-        await Action.query()
-          .insert({ userId: userId, description: action.description })
+        const newAction = await Action.query()
+          .insertAndFetch({ userId: userId, description: action.description })
+        actionIds.push(newAction.id)
       }
     }
     const actions = await Action.query().where("userId", userId)
     for (const existingAction of actions) {
-      if (!actionsIds.includes(existingAction.id)) {
+      if (!actionIds.includes(existingAction.id)) {
         await Action.query()
           .findById(existingAction.id)
           .delete()

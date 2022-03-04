@@ -12,6 +12,7 @@ const MissionForm = props => {
   })
   const [shouldRedirect, setShouldRedirect] = useState([false, null])
   const [stepNum, setStepNum] = useState(1)
+  const [actions, setActions] = useState([])
   
   const handleChange = event => {
     const inputName = event.currentTarget.name.split(" ")
@@ -45,14 +46,25 @@ const MissionForm = props => {
       onChange={handleChange}
     />
   })
+  const actionsDataList = actions.map(action => {
+    return (
+      <option
+        key={`${action.id} actionOption`}
+        value={action.description}
+      />
+    )
+  })
   const actionInputs = form.steps.map((step, i) => {
-    return <input
-      key={`${i} action`}
-      type="text"
-      name={`${i} action`}
-      value={form.steps[i].action}
-      onChange={handleChange}
-    />
+    return (
+      <input
+        key={`${i} action`}
+        type="text"
+        name={`${i} action`}
+        value={form.steps[i].action}
+        onChange={handleChange}
+        list="actionList"
+      />
+    )
   })
   const durationInputs = form.steps.map((step, i) => {
     return (
@@ -113,6 +125,21 @@ const MissionForm = props => {
       steps: updatedSteps
     })
   }
+
+  const getActions = async () => {
+    try {
+      const response = await fetch(`/api/v1/${props.user.id}/presets`)
+      if (!response.ok) {
+        const errorMessage = `${response.status} (${response.statusTest})`
+        const error = new Error(errorMessage)
+        throw(error)
+      }
+      const body = await response.json()
+      setActions(body.actions)
+    } catch (error) {
+      console.error("Error in fetch", error)
+    }
+  }
   
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -142,10 +169,14 @@ const MissionForm = props => {
       console.error("error in fetch", err)
     }
   }
+
+  useEffect(() => {
+    getActions()
+  }, [])
   
-    useEffect(() => {
-      generateForm(stepNum)
-    }, [stepNum])
+  useEffect(() => {
+    generateForm(stepNum)
+  }, [stepNum])
 
   if (shouldRedirect[0]) {
     return <Redirect push to={`/missions/${shouldRedirect[1]}`} />
@@ -159,7 +190,7 @@ const MissionForm = props => {
           <div className="cell small-2" />
           <div className="cell small-8 opal-tile">
             <div className="grid-x grid-margin-x align-bottom">
-              <div className="cell small-3">
+              <div className="cell small-2">
                 <label htmlFor="stepNum" className="bold">Number of steps:</label>
                     <select name="stepNum" className="option" onChange={stepChange}>
                       <option value={1}>1</option>
@@ -178,15 +209,18 @@ const MissionForm = props => {
                 <label className="bold">Item(s)</label>
                 {itemInputs}
               </div>
-              <div className="cell small-3">
+              <div className="cell small-5">
                 <label className="bold">Action</label>
+                <datalist id="actionList">
+                  {actionsDataList}
+                </datalist>
                 {actionInputs}
               </div>
               <div className="cell small-3">
                 <label className="bold">Duration (mm:ss)</label>
                 {durationInputs}
               </div>
-              <div className="cell small-3">
+              <div className="cell small-2">
                 <label className="bold">Anxiety Level (0-5)</label>
                 {anxietyInputs}
               </div>
