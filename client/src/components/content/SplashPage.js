@@ -10,10 +10,6 @@ const SplashPage = props => {
       <div className="cell small-8">
         <h2 className="centered">A straightforward tracker for pet separation anxiety training</h2>
         <img src={panic_to_calm} className="opal-tile centered" />
-        <br/>
-        <div className="centered">
-          <h6 className="button centered"><Link to="/users/new">Get started</Link></h6>
-        </div>
       </div>
       <div className="cell small-2" />
     </div>

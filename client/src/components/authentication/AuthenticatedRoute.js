@@ -1,5 +1,7 @@
 import React from "react";
-import { Redirect, Route } from "react-router";
+import { Route } from "react-router";
+
+import MustLogIn from "../content/MustLogIn";
 
 const AuthenticationCheck = ({ component: Component, user }) => {
   if (user === undefined) {
@@ -8,7 +10,7 @@ const AuthenticationCheck = ({ component: Component, user }) => {
   if (user !== null) {
     return <Component user={user}/>;
   }
-  return <Redirect to="/user-sessions/new" />;
+  return <MustLogIn />;
 };
 
 const AuthenticatedRoute = ({ component, user, ...rest }) => {

@@ -15,7 +15,6 @@ const DurationGraph = props => {
       const body = await response.json()
       const rows = body.missionDuration.map(mission => {
         const date = new Date(mission.createdAt)
-        console.log(date)
         return [date, mission.duration]
       })
       setDurations(durations.concat(rows))
