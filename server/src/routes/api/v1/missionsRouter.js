@@ -60,8 +60,15 @@ missionsRouter.post("/", async (req, res) => {
   const { userId } = req.params
   try {
     const missionBody = cleanMissionForm(req.body)
+    let missionDate
+    if (missionBody.date) {
+      const date = missionBody.date.split("-")
+      missionDate = new Date(date[0], date[1] - 1, date[2])
+    } else {
+      missionDate = new Date()
+    }
     const transactionReturn = await Mission.transaction(async trx => {
-      let newMission = await Mission.query(trx).insertAndFetch({ userId: userId, notes: missionBody.notes })
+      let newMission = await Mission.query(trx).insertAndFetch({ userId: userId, date: missionDate, notes: missionBody.notes })
       for (let i=0; i < missionBody.steps.length; i++) {
         const step = missionBody.steps[i]
         const newStep = {

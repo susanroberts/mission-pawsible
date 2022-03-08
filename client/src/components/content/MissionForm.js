@@ -8,7 +8,7 @@ const MissionForm = props => {
   const [errors, setErrors] = useState([])
   const [form, setForm] = useState({
     notes: "",
-    createdAt: "",
+    date: "",
     steps: []
   })
   const [shouldRedirect, setShouldRedirect] = useState([false, null])
@@ -24,7 +24,7 @@ const MissionForm = props => {
     } else if (event.currentTarget.name === "date") {
       setForm({
         ...form,
-        createdAt: event.currentTarget.value
+        date: event.currentTarget.value
       })
     } else {
       const inputName = event.currentTarget.name.split(" ")
@@ -197,10 +197,10 @@ const MissionForm = props => {
           <div className="cell small-8 opal-tile">
             <div className="grid-x grid-margin-x align-bottom">
               <div className="cell small-2">
-                <label htmlFor="date" className="bold">Date:</label>
+                <label htmlFor="date" className="bold">Date</label>
                 <input
                   type="date"
-                  value={form.createdAt}
+                  value={form.date}
                   onChange={handleChange}
                   name="date"
                   id="date"
@@ -220,7 +220,7 @@ const MissionForm = props => {
                 {durationInputs}
               </div>
               <div className="cell small-2">
-                <label htmlFor="stepNum" className="bold">Number of steps:</label>
+                <label htmlFor="stepNum" className="bold">Number of steps</label>
                 <select name="stepNum" className="option" onChange={stepChange}>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
