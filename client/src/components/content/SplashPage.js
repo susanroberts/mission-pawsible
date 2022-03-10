@@ -8,12 +8,9 @@ const SplashPage = props => {
     <div className="grid-x grid-padding-x">
       <div className="cell small-2" />
       <div className="cell small-8">
-        <h2 className="centered">A straightforward tracker for pet separation anxiety training</h2>
+        <h2 className="centered">A tracker for pet separation anxiety training</h2>
+        <p className="centered">This app was built as my capstone at Launch Academy. It uses NodeJS, ReactJS, ExpressJS, PostgreSQL and RESTful API. The code is available to view <a className="white" href="https://github.com/susanroberts/mission-pawsible" target="_blank">HERE</a> on GitHub.</p>
         <img src={panic_to_calm} className="opal-tile centered" />
-        <br/>
-        <div className="centered">
-          <h6 className="button centered"><Link to="/users/new">Get started</Link></h6>
-        </div>
       </div>
       <div className="cell small-2" />
     </div>

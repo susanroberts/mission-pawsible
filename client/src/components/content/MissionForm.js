@@ -8,6 +8,7 @@ const MissionForm = props => {
   const [errors, setErrors] = useState([])
   const [form, setForm] = useState({
     notes: "",
+    date: "",
     steps: []
   })
   const [shouldRedirect, setShouldRedirect] = useState([false, null])
@@ -15,22 +16,27 @@ const MissionForm = props => {
   const [actions, setActions] = useState([])
   
   const handleChange = event => {
-    const inputName = event.currentTarget.name.split(" ")
-    const stepIndex = parseInt(inputName[0])
-    const fieldName = inputName[1]
-    const updatedSteps = form.steps.concat()
-    updatedSteps[stepIndex][fieldName] = event.currentTarget.value
-    setForm({ 
-      ...form,
-      steps: updatedSteps
-    })
-  }
-  
-  const noteChange = event => {
-    setForm({
-      ...form,
-      notes: event.currentTarget.value
-    })
+    if (event.currentTarget.name === "notes") {
+      setForm({
+        ...form,
+        notes: event.currentTarget.value
+      })
+    } else if (event.currentTarget.name === "date") {
+      setForm({
+        ...form,
+        date: event.currentTarget.value
+      })
+    } else {
+      const inputName = event.currentTarget.name.split(" ")
+      const stepIndex = parseInt(inputName[0])
+      const fieldName = inputName[1]
+      const updatedSteps = form.steps.concat()
+      updatedSteps[stepIndex][fieldName] = event.currentTarget.value
+      setForm({ 
+        ...form,
+        steps: updatedSteps
+      })
+    }
   }
 
   const stepChange = event => {
@@ -112,16 +118,18 @@ const MissionForm = props => {
         updatedSteps.push({
           item: "",
           action: "",
-          durationMinutes: "",
-          durationSecons: "",
-          anxietyLevel: ""
+          durationMinutes: 0,
+          durationSeconds: "00",
+          anxietyLevel: 0
         })
       }
     } else if (steps < updatedSteps.length) {
       updatedSteps.splice(steps)
     }
+    const today = new Date().toISOString().split("T")[0]
     setForm({
       ...form,
+      date: today,
       steps: updatedSteps
     })
   }
@@ -191,21 +199,14 @@ const MissionForm = props => {
           <div className="cell small-8 opal-tile">
             <div className="grid-x grid-margin-x align-bottom">
               <div className="cell small-2">
-                <label htmlFor="stepNum" className="bold">Number of steps:</label>
-                    <select name="stepNum" className="option" onChange={stepChange}>
-                      <option value={1}>1</option>
-                      <option value={2}>2</option>
-                      <option value={3}>3</option>
-                      <option value={4}>4</option>
-                      <option value={5}>5</option>
-                      <option value={6}>6</option>
-                      <option value={7}>7</option>
-                      <option value={8}>8</option>
-                      <option value={9}>9</option>
-                      <option value={10}>10</option>
-                      <option value={11}>11</option>
-                      <option value={12}>12</option>
-                    </select>
+                <label htmlFor="date" className="bold">Date</label>
+                <input
+                  type="date"
+                  value={form.date}
+                  onChange={handleChange}
+                  name="date"
+                  id="date"
+                />
                 <label className="bold">Item(s)</label>
                 {itemInputs}
               </div>
@@ -221,12 +222,27 @@ const MissionForm = props => {
                 {durationInputs}
               </div>
               <div className="cell small-2">
+                <label htmlFor="stepNum" className="bold">Number of steps</label>
+                <select name="stepNum" className="option" onChange={stepChange}>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                  <option value={10}>10</option>
+                  <option value={11}>11</option>
+                  <option value={12}>12</option>
+                </select>
                 <label className="bold">Anxiety Level (0-5)</label>
                 {anxietyInputs}
               </div>
               <div className="cell small-12">
                 <label htmlFor="notes" className="bold">Notes:</label>
-                <textarea name="notes" onChange={noteChange} value={form.notes} />
+                <textarea name="notes" onChange={handleChange} value={form.notes} />
                 <input type="submit" className="button"/>
               </div>
             </div>

@@ -2,6 +2,9 @@ const cleanMissionForm = formInput => {
   if (formInput.notes === "") {
     delete formInput.notes
   }
+  if (formInput.date === "") {
+    delete formInput.date
+  }
   formInput.steps.forEach(step => {
     const { durationMinutes, durationSeconds } = step
     step.duration = parseInt(durationMinutes) * 60 + parseInt(durationSeconds)
