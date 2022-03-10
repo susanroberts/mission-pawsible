@@ -114,6 +114,11 @@ tr {
   vertical-align: bottom;
 }
 
+.white,
+.white :hover {
+  color: white !important;
+}
+
 *,
 *::before,
 *::after {
