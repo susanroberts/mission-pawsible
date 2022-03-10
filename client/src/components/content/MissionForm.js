@@ -126,8 +126,10 @@ const MissionForm = props => {
     } else if (steps < updatedSteps.length) {
       updatedSteps.splice(steps)
     }
+    const today = new Date().toISOString().split("T")[0]
     setForm({
       ...form,
+      date: today,
       steps: updatedSteps
     })
   }

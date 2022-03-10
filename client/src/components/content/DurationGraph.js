@@ -14,7 +14,7 @@ const DurationGraph = props => {
       }
       const body = await response.json()
       const rows = body.missionDuration.map(mission => {
-        const date = new Date(mission.createdAt)
+        const date = new Date(mission.date)
         return [date, mission.duration]
       })
       setDurations(durations.concat(rows))
@@ -50,6 +50,7 @@ const DurationGraph = props => {
         options={options}
       />
     </div>
+    <p>*only the final step in a mission is counted towards duration</p>
     </>
   )
 }

@@ -8,7 +8,6 @@
 exports.up = async (knex) => {
   return knex.schema.alterTable("missions", t => {
     t.timestamp("date")
-      .notNullable()
   })
 }
 

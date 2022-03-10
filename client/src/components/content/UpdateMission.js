@@ -8,27 +8,33 @@ const UpdateMission = props => {
   const params = useParams()
   const [form, setForm] = useState({
     notes: "",
+    date: "",
     steps: []
   })
   const [errors, setErrors] = useState([])
   
   const handleChange = event => {
-    const inputName = event.currentTarget.name.split(" ")
-    const stepIndex = parseInt(inputName[0])
-    const fieldName = inputName[1]
-    const updatedSteps = form.steps.concat()
-    updatedSteps[stepIndex][fieldName] = event.currentTarget.value
-    setForm({ 
-      ...form,
-      steps: updatedSteps
-    })
-  }
-  
-  const noteChange = event => {
-    setForm({
-      ...form,
-      notes: event.currentTarget.value
-    })
+    if (event.currentTarget.name === "notes") {
+      setForm({
+        ...form,
+        notes: event.currentTarget.value
+      })
+    } else if (event.currentTarget.name === "date") {
+      setForm({
+        ...form,
+        date: event.currentTarget.value
+      })
+    } else {
+      const inputName = event.currentTarget.name.split(" ")
+      const stepIndex = parseInt(inputName[0])
+      const fieldName = inputName[1]
+      const updatedSteps = form.steps.concat()
+      updatedSteps[stepIndex][fieldName] = event.currentTarget.value
+      setForm({ 
+        ...form,
+        steps: updatedSteps
+      })
+    }
   }
   
   const itemInputs = form.steps.map((step, i) => {
@@ -51,7 +57,7 @@ const UpdateMission = props => {
   })
   const durationInputs = form.steps.map((step, i) => {
     return (
-      <Fragment>
+      <Fragment key={`${i} duration`}>
         <input
           key={`${i} durationMinutes`}
           type="number"
@@ -87,8 +93,10 @@ const UpdateMission = props => {
   })
 
   const generateForm = () => {
+    const missionDate = props.mission.date.split("T")[0]
     setForm({
       notes: props.mission.notes,
+      date: missionDate,
       steps: props.mission.steps
     })
   }
@@ -125,10 +133,18 @@ const UpdateMission = props => {
     <div className="grid-x grid-margin-x">
       <div className="cell small-2" />
       <div className="cell small-8 opal-tile">
-        <h1>Mission from {props.mission.date}</h1>
+        <h1>Mission from {new Date(props.mission.date).toDateString()}</h1>
         <ErrorList errors={errors} />
         <div className="grid-x grid-padding-x align-bottom">
           <div className="cell small-3">
+            <label htmlFor="date" className="bold">Date</label>
+              <input
+                type="date"
+                value={form.date}
+                onChange={handleChange}
+                name="date"
+                id="date"
+              />
             <label className="bold">Item(s)</label>
             {itemInputs}
           </div>
@@ -147,7 +163,7 @@ const UpdateMission = props => {
         </div>
           <div className="cell small-8">
             <label htmlFor="notes" className="bold">Notes:</label>
-            <textarea name="notes" onChange={noteChange} value={form.notes} />
+            <textarea name="notes" onChange={handleChange} value={form.notes} />
           </div>
         <p className="button" onClick={handleSubmit}>Save</p>
         <p className="button" onClick={props.toggleEdit}>Cancel</p>

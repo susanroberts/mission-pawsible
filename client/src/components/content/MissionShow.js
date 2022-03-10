@@ -72,7 +72,7 @@ const MissionShow = props => {
     <div className="grid-x grid-margin-x">
       <div className="cell small-2" />
       <div className="cell small-8 opal-tile">
-        <h1>Mission from {mission.date}</h1>
+        <h1>Mission from {new Date(mission.date).toDateString()}</h1>
         <StepList steps={mission.steps} />
         {notes}
         <div className="justify">
