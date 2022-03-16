@@ -7,7 +7,7 @@
  */
 exports.up = async (knex) => {
   return knex.schema.alterTable("missions", t => {
-    t.timestamp("date")
+    t.date("sessionDate")
   })
 }
 
@@ -16,6 +16,6 @@ exports.up = async (knex) => {
  */
 exports.down = (knex) => {
   return knex.schema.alterTable("missions", t => {
-    t.dropColumn("date")
+    t.dropColumn("sessionDate")
   })
 }

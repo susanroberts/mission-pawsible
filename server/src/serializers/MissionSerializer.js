@@ -3,17 +3,17 @@ import { Mission } from "../models/index.js"
 class MissionSerializer {
   static getSummary(missionArray) {
     missionArray.forEach(mission => {
-      if (mission.date === null) {
-        mission.date = mission.createdAt
+      if (mission.sessionDate === null) {
+        mission.sessionDate = mission.createdAt
       }
     })
     missionArray.sort((a, b) => {
-      return b.date - a.date
+      return b.sessionDate - a.sessionDate
     })
     const serializedMissions = missionArray.map(mission => {
       const cleanMission = {}
       cleanMission.id = mission.id
-      cleanMission.date = mission.date.toDateString()
+      cleanMission.sessionDate = mission.sessionDate.toDateString()
       return cleanMission
     })
     return serializedMissions
@@ -21,12 +21,12 @@ class MissionSerializer {
 
   static async getDetails(mission) {
     mission.steps = await mission.$relatedQuery("steps")
-    if (mission.date === null) {
-      mission.date = mission.createdAt
+    if (mission.sessionDate === null) {
+      mission.sessionDate = mission.createdAt
     }
     const serializedMission = {
       notes: mission.notes,
-      date: mission.date
+      sessionDate: mission.sessionDate
     }
     const allowedAttributes = ["id", "stepNumber", "item", "action", "anxietyLevel"]
     serializedMission.steps = mission.steps.map(step => {
@@ -46,7 +46,7 @@ class MissionSerializer {
     rangeStart.setDate(rangeStart.getDate() - (rangeStart.getDay() + 6) % 7)
     rangeStart.setHours(0, 0, 0, 0)
     let rangeEnd = new Date()
-    const missions = await Mission.query().where("userId", userId).whereBetween("createdAt", [rangeStart, rangeEnd])
+    const missions = await Mission.query().where("userId", userId).whereBetween("sessionDate", [rangeStart, rangeEnd])
     missions.sort((a, b) => {
       return b.createdAt - a.createdAt
     })
@@ -59,14 +59,14 @@ class MissionSerializer {
     rangeEnd.setDate(rangeEnd.getDate() - (rangeEnd.getDay() + 6) % 7)
     rangeEnd.setHours(0, 0, 0, 0)
     let rangeStart = new Date(rangeEnd.getTime() - 604800000)
-    const missions = await Mission.query().where("userId", userId).whereBetween("date", [rangeStart, rangeEnd])
+    const missions = await Mission.query().where("userId", userId).whereBetween("sessionDate", [rangeStart, rangeEnd])
     missions.forEach(mission => {
-      if (mission.date === null) {
-        mission.date = mission.createdAt
+      if (mission.sessionDate === null) {
+        mission.sessionDate = mission.createdAt
       }
     })
     missions.sort((a, b) => {
-      return b.date - a.date
+      return b.sessionDate - a.sessionDate
     })
     const serializedMissions = this.getSummary(missions)
     return serializedMissions
@@ -75,8 +75,8 @@ class MissionSerializer {
   static async getDurations(userId) {
     const missions = await Mission.query().where("userId", userId)
     for (const mission of missions) {
-      if (mission.date === null) {
-        mission.date = mission.createdAt
+      if (mission.sessionDate === null) {
+        mission.sessionDate = mission.createdAt
       }
       mission.steps = await mission.$relatedQuery("steps")
     }
@@ -88,7 +88,7 @@ class MissionSerializer {
         }
       })
       const durationMin = finalStep.duration / 60
-      return { date: mission.date, duration: durationMin }
+      return { sessionDate: mission.sessionDate, duration: durationMin }
     })
     return durationArray
   }

@@ -68,7 +68,7 @@ missionsRouter.post("/", async (req, res) => {
       missionDate = new Date().toISOString()
     }
     const transactionReturn = await Mission.transaction(async trx => {
-      let newMission = await Mission.query(trx).insertAndFetch({ userId: userId, date: missionDate, notes: missionBody.notes })
+      let newMission = await Mission.query(trx).insertAndFetch({ userId: userId, sessionDate: missionDate, notes: missionBody.notes })
       for (let i=0; i < missionBody.steps.length; i++) {
         const step = missionBody.steps[i]
         const newStep = {
@@ -98,10 +98,10 @@ missionsRouter.put("/:missionId", async (req, res) => {
     if (updateRequest.notes === undefined) {
       updateRequest.notes = null
     }
-    if (updateRequest.date) {
-      const date = updateRequest.date.split("-")
-      updateRequest.date = new Date(date[0], date[1] - 1, date[2]).toISOString()
-    }
+    // if (updateRequest.date) {
+    //   const date = updateRequest.date.split("-")
+    //   updateRequest.date = new Date(date[0], date[1] - 1, date[2]).toISOString()
+    // }
     const transactionReturn = await Mission.transaction(async trx => {
       if (updateRequest.date === undefined) {
         await Mission.query(trx)
@@ -109,7 +109,7 @@ missionsRouter.put("/:missionId", async (req, res) => {
           .where("id", missionId)
       } else {
         await Mission.query(trx)
-          .update({ notes: updateRequest.notes, date: updateRequest.date, userId: userId })
+          .update({ notes: updateRequest.notes, sessionDate: updateRequest.date, userId: userId })
           .where("id", missionId)
       }
       for (const step of updateRequest.steps) {
