@@ -8,6 +8,7 @@ const MissionShow = props => {
   const params = useParams()
   const [mission, setMission] = useState({
     notes: null,
+    dateString: "",
     steps: []
   })
   const [shouldRedirect, setShouldRedirect] = useState(false)
@@ -23,6 +24,7 @@ const MissionShow = props => {
         throw (error)
       }
       const body = await response.json()
+      body.mission.dateString = new Date(body.mission.sessionDate).toDateString()
       setMission(body.mission)
     } catch (error) {
       console.error("Error in fetch", error)
@@ -72,7 +74,7 @@ const MissionShow = props => {
     <div className="grid-x grid-margin-x">
       <div className="cell small-2" />
       <div className="cell small-8 opal-tile">
-        <h1>Mission from {new Date(mission.date).toDateString()}</h1>
+        <h1>Mission from {mission.dateString}</h1>
         <StepList steps={mission.steps} />
         {notes}
         <div className="justify">
