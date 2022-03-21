@@ -2,8 +2,8 @@ const cleanMissionForm = formInput => {
   if (formInput.notes === "") {
     delete formInput.notes
   }
-  if (formInput.date === "") {
-    delete formInput.date
+  if (formInput.editDate === "") {
+    delete formInput.editDate
   }
   formInput.steps.forEach(step => {
     const { durationMinutes, durationSeconds } = step
