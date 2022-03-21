@@ -98,18 +98,14 @@ missionsRouter.put("/:missionId", async (req, res) => {
     if (updateRequest.notes === undefined) {
       updateRequest.notes = null
     }
-    if (updateRequest.sessionDate) {
-      const sessionDate = updateRequest.sessionDate.split("-")
-      updateRequest.sessionDate = new Date(sessionDate[0], sessionDate[1] - 1, sessionDate[2]).toISOString()
-    }
     const transactionReturn = await Mission.transaction(async trx => {
-      if (updateRequest.sessionDate === undefined) {
+      if (updateRequest.editDate === undefined) {
         await Mission.query(trx)
           .update({ notes: updateRequest.notes, userId: userId })
           .where("id", missionId)
       } else {
         await Mission.query(trx)
-          .update({ notes: updateRequest.notes, sessionDate: updateRequest.sessionDate, userId: userId })
+          .update({ notes: updateRequest.notes, sessionDate: updateRequest.editDate, userId: userId })
           .where("id", missionId)
       }
       for (const step of updateRequest.steps) {

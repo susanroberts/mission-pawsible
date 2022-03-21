@@ -24,9 +24,11 @@ class MissionSerializer {
     if (mission.sessionDate === null) {
       mission.sessionDate = mission.createdAt
     }
+    const editDate = new Date(mission.sessionDate).toISOString().split("T")[0]
     const serializedMission = {
       notes: mission.notes,
-      sessionDate: mission.sessionDate
+      sessionDate: mission.sessionDate.toDateString(),
+      editDate: editDate
     }
     const allowedAttributes = ["id", "stepNumber", "item", "action", "anxietyLevel"]
     serializedMission.steps = mission.steps.map(step => {

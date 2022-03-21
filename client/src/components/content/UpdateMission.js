@@ -9,9 +9,9 @@ const UpdateMission = props => {
   const [form, setForm] = useState({
     notes: "",
     sessionDate: "",
+    editDate: "",
     steps: []
   })
-  const [initialDate, setInitialDate] = useState()
   const [errors, setErrors] = useState([])
   
   const handleChange = event => {
@@ -23,7 +23,7 @@ const UpdateMission = props => {
     } else if (event.currentTarget.name === "date") {
       setForm({
         ...form,
-        sessionDate: event.currentTarget.value
+        editDate: event.currentTarget.value
       })
     } else {
       const inputName = event.currentTarget.name.split(" ")
@@ -94,15 +94,14 @@ const UpdateMission = props => {
   })
 
   const generateForm = () => {
-    const missionDate = props.mission.sessionDate.split("T")[0]
-    setInitialDate(new Date(props.mission.sessionDate).toDateString())
     let missionNotes = props.mission.notes
     if (missionNotes === null) {
       missionNotes = ""
     }
     setForm({
       notes: missionNotes,
-      sessionDate: missionDate,
+      sessionDate: props.mission.sessionDate,
+      editDate: props.mission.editDate,
       steps: props.mission.steps
     })
   }
@@ -139,14 +138,14 @@ const UpdateMission = props => {
     <div className="grid-x grid-margin-x">
       <div className="cell small-2" />
       <div className="cell small-8 opal-tile">
-        <h1>Mission from {initialDate}</h1>
+        <h1>Mission from {form.sessionDate}</h1>
         <ErrorList errors={errors} />
         <div className="grid-x grid-padding-x align-bottom">
           <div className="cell small-3">
             <label htmlFor="date" className="bold">Date</label>
               <input
                 type="date"
-                value={form.sessionDate}
+                value={form.editDate}
                 onChange={handleChange}
                 name="date"
                 id="date"
